@@ -44,4 +44,13 @@ public class MovieController {
         MovieEntity entity = movieService.getMovie(id);
         return MovieMapper.toResponse(entity);
     }
+
+    @GetMapping("/search")
+    public List<MovieResponse> searchMovies(@RequestParam String title) {
+
+    return movieService.searchByTitle(title)
+            .stream()
+            .map(MovieMapper::toResponse)
+            .toList();
+    }
 }

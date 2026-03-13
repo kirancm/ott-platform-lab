@@ -8,6 +8,14 @@ public class MovieRequest {
     private Integer durationMinutes;
     private String language;
     private Double rating;
+    private String genre;
+
+    public String getGenre() {
+        return genre;
+    }
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
 
     // getters and setters
     public String getTitle() {

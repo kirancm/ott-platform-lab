@@ -14,6 +14,7 @@ public class MovieMapper {
         entity.setDurationMinutes(request.getDurationMinutes());
         entity.setLanguage(request.getLanguage());
         entity.setRating(request.getRating());
+        entity.setGenre(request.getGenre());
         return entity;
     }
     public static MovieResponse toResponse(MovieEntity entity) {
@@ -26,6 +27,7 @@ public class MovieMapper {
         movieResponse.setDurationMinutes(entity.getDurationMinutes());
         movieResponse.setLanguage(entity.getLanguage());
         movieResponse.setRating(entity.getRating());
+        movieResponse.setGenre(entity.getGenre());
         return movieResponse;
     }
 }    

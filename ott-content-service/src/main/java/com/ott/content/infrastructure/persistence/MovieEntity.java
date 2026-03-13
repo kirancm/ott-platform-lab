@@ -26,6 +26,14 @@ public class MovieEntity {
 
     private Double rating;
 
+    private String genre;
+    public String getGenre() {
+        return genre;
+    }
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
     //getters and setters
     public Long getId() {
         return id;

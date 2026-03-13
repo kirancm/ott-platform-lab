@@ -26,4 +26,8 @@ public class MovieService {
     public MovieEntity getMovie(Long id) {
         return movieRepository.findById(id).orElseThrow();
     }
+
+    public List<MovieEntity> searchByTitle(String title) {
+    return movieRepository.findByTitleContainingIgnoreCase(title);
+}
 }
