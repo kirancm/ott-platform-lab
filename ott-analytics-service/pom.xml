@@ -11,7 +11,7 @@
 	<groupId>com.ott.analytics</groupId>
 	<artifactId>ott-analytics-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ott-analytics-service</name>
+	<name>analytics service</name>
 	<description>ott-analytics-service</description>
 	<url/>
 	<licenses>

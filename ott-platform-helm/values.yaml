@@ -3,6 +3,11 @@ contentService:
   replicas: 1
   port: 8080
 
+analyticsService:
+  image: analytics-service:1.0
+  replicas: 1
+  port: 8081
+
 postgres:
   image: postgres:16
   db: ott
