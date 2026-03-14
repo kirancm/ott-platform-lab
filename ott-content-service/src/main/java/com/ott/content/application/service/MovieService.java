@@ -2,6 +2,9 @@ package com.ott.content.application.service;
 
 import com.ott.content.infrastructure.persistence.JpaMovieRepository;
 import com.ott.content.infrastructure.persistence.MovieEntity;
+
+import org.springframework.cache.annotation.Cacheable;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,10 +22,12 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
+ 
     public List<MovieEntity> getAllMovies() {
         return movieRepository.findAll();
     }
 
+    @Cacheable(value = "movieCache", key = "#id")
     public MovieEntity getMovie(Long id) {
         return movieRepository.findById(id).orElseThrow();
     }
