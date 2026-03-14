@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ott-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /content(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: content-service
+            port:
+              number: 8081
+      - path: /analytics(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: analytics-service
+            port:
+              number: 8081

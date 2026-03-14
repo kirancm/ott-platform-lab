@@ -1,4 +1,9 @@
-
 ott-content-service/minikube-linux-amd64
-
 ott-content-service/k9s_Linux_amd64.tar.gz
+ott-platform-helm/nohup.out
+target/
+*.class
+.idea/
+.vscode/
+nohup.out:q
+

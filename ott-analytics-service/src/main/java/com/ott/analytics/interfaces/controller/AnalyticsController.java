@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ott.analytics.application.service.AnalyticsService;
 
 @RestController
-@RequestMapping("/analytics")
+@RequestMapping("/trending")
 public class AnalyticsController {
 
     private final AnalyticsService analyticsService;
@@ -18,7 +18,7 @@ public class AnalyticsController {
         this.analyticsService = analyticsService;
     }
 
-    @GetMapping("/trending/movies")
+    @GetMapping("/movies")
     public Set<String> getTrendingMovies() {
 
         return analyticsService.getTrendingMovies();

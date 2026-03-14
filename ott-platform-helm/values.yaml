@@ -1,10 +1,10 @@
 contentService:
   image: ott-content-service:1.1
   replicas: 1
-  port: 8080
+  port: 8081
 
 analyticsService:
-  image: analytics-service:1.0
+  image: analytics-service:1.1
   replicas: 1
   port: 8081
 
