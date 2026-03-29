@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: opcon-controller
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8090/realms/opcon}
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8090/realms/opcon/protocol/openid-connect/certs}
+
+server:
+  port: 8084
+
+downstream:
+  cwm:
+    base-url: ${CWM_BASE_URL:http://localhost:8081}
+  search:
+    base-url: ${SEARCH_BASE_URL:http://localhost:8082}
+  content:
+    base-url: ${CONTENT_BASE_URL:http://localhost:8083}
+
+opcon:
+  webclient:
+    timeout-seconds: 3
+    retry-attempts: 2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+logging:
+  level:
+    com.opcon.bff: INFO
+    org.springframework.security: INFO
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      cwmClient:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+      searchClient:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+      contentClient:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s

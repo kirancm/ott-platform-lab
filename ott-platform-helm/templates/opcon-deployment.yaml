@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opcon-controller
+spec:
+  replicas: {{ .Values.opconService.replicas }}
+  selector:
+    matchLabels:
+      app: opcon-controller
+  template:
+    metadata:
+      labels:
+        app: opcon-controller
+    spec:
+      containers:
+        - name: opcon-controller
+          image: {{ .Values.opconService.image }}
+          ports:
+            - containerPort: {{ .Values.opconService.port }}
+          env:
+            - name: CWM_BASE_URL
+              value: {{ .Values.opconService.cwmBaseUrl | quote }}
+            - name: SEARCH_BASE_URL
+              value: {{ .Values.opconService.searchBaseUrl | quote }}
+            - name: CONTENT_BASE_URL
+              value: {{ .Values.opconService.contentBaseUrl | quote }}
+            - name: KEYCLOAK_ISSUER_URI
+              value: {{ .Values.opconService.keycloak.issuerUri | quote }}
+            - name: KEYCLOAK_JWK_SET_URI
+              value: {{ .Values.opconService.keycloak.jwkSetUri | quote }}
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.opconService.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.opconService.port }}
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 3
+            failureThreshold: 3

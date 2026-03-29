@@ -5,5 +5,4 @@ target/
 *.class
 .idea/
 .vscode/
-nohup.out:q
-
+nohup.out

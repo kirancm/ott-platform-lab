@@ -23,3 +23,10 @@ spec:
             name: analytics-service
             port:
               number: 8081
+      - path: /cwm(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cwm-service
+            port:
+              number: 8083

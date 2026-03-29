@@ -3,10 +3,26 @@ contentService:
   replicas: 1
   port: 8081
 
+cwmService:
+  image: ott-cwm-service:1.0
+  replicas: 1
+  port: 8083
+
 analyticsService:
   image: analytics-service:1.1
   replicas: 1
   port: 8081
+
+opconService:
+  image: opcon-controller:1.0
+  replicas: 1
+  port: 8084
+  cwmBaseUrl: http://cwm-service:8083
+  searchBaseUrl: http://search-aggregator-service:8082
+  contentBaseUrl: http://content-service:8081
+  keycloak:
+    issuerUri: http://keycloak:8080/realms/opcon
+    jwkSetUri: http://keycloak:8080/realms/opcon/protocol/openid-connect/certs
 
 postgres:
   image: postgres:16
@@ -23,3 +39,52 @@ redis:
   architecture: standalone
   auth:
     enabled: false
+kube-prometheus-stack:
+  enabled: false
+  grafana:
+    adminPassword: admin123
+
+  prometheus:
+    prometheusSpec:
+      serviceMonitorSelectorNilUsesHelmValues: false
+
+jaeger:
+  enabled: false
+  provisionDataStore:
+    cassandra: false
+
+  storage:
+    type: memory
+
+  collector:
+    extraEnv:
+      - name: COLLECTOR_OTLP_ENABLED
+        value: "true"
+
+  query:
+    service:
+      type: ClusterIP
+
+elasticsearch:
+  replicas: 1
+
+  minimumMasterNodes: 1
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "500m"
+      memory: "1Gi"
+
+  volumeClaimTemplate:
+    accessModes: ["ReadWriteOnce"]
+    resources:
+      requests:
+        storage: 1Gi
+
+  esConfig:
+    elasticsearch.yml: |
+      xpack.security.enabled: false
+      cluster.initial_master_nodes: ["elasticsearch-master-0"]
