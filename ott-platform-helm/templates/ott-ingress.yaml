@@ -30,3 +30,10 @@ spec:
             name: cwm-service
             port:
               number: 8083
+      - path: /opcon(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: opcon-controller
+            port:
+              number: 8084
